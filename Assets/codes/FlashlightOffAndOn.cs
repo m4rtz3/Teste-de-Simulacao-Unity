@@ -8,7 +8,7 @@ public class FlashlightOffAndOn : MonoBehaviour
     public Light flashlight;
 
     // já declarar as intensidades tbm como variaveis
-    public float onIntensity = 10f;
+    public float onIntensity = 8f;
     public float offIntensity = 0f;
 
     // fazer um estado para quando está apagado ou ligado já começando como false
