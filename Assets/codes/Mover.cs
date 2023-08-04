@@ -7,8 +7,8 @@ public class Mover : MonoBehaviour
 {
     public Cartas cartasScript;
     public ScoreCartas scoreCartasScripts;
-
     public Texto textoScript;
+    public AudioController audioControlScript;
 
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float rotationSpeed = 5f;
@@ -90,11 +90,16 @@ public class Mover : MonoBehaviour
             //if (collision.gameObject.CompareTag("Carta"))
             if (parentName == "Carta")
             {
-                Destroy(collision.gameObject);
+                Destroy(collision.gameObject, 0.1f);
 
                 if (cartasScript != null)
                 {
                     cartasScript.CartasToMover();
+                }
+
+                if (audioControlScript != null)
+                {
+                    audioControlScript.TocarFitaUm();
                 }
 
                 if (scoreCartasScripts != null)

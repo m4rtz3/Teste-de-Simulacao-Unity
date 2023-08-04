@@ -35,6 +35,7 @@ public class Cartas : MonoBehaviour
         {
             tempoInicial = Time.time;
             textoDaSimulacao.text = "Olha, uma fita...";
+
             Invoke("ResetTextoCarta", 5f);
         }
     }

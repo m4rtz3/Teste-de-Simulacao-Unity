@@ -28,7 +28,7 @@ public class ScoreCartas : MonoBehaviour
         if (tempoInicialCartasScore == 0f)
         {
             tempoInicialCartasScore = Time.time;
-            textoCartasEncontradas.text = cartasEncontradas + "/" + totalCartas + " FITAS!";
+            textoCartasEncontradas.text = cartasEncontradas + "/" + totalCartas + " FITAS ENCONTRADAS";
             Invoke("ResetTextoCartasScore", 5f);
         }
     }
