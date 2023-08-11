@@ -9,6 +9,7 @@ public class Mover : MonoBehaviour
     public ScoreCartas scoreCartasScripts;
     public Texto textoScript;
     public AudioController audioControlScript;
+    public Rotation rotationScript;
 
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float rotationSpeed = 5f;
@@ -16,6 +17,8 @@ public class Mover : MonoBehaviour
     private float xReset = 0f;
     private float yReset = -0.4565005f;
     private float zReset = -61.9f;
+
+    private int reset = 0;
 
     public float forcaDeSalto = 5f;
     private Rigidbody m_Rb;
@@ -43,6 +46,16 @@ public class Mover : MonoBehaviour
         //metodo de movimento do character
         Movimento();
 
+        if (rotationScript != null)
+        {
+            rotationScript.Rotacao();
+        }
+
+        if (rotationScript != null)
+        {
+            rotationScript.Start();
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Saltar();
@@ -64,12 +77,12 @@ public class Mover : MonoBehaviour
         }
 
         // isso tudo para que o personagem rotacione quando é clicado as setas lá
-        Quaternion targetRotation = Quaternion.LookRotation(movement);
+        //Quaternion targetRotation = Quaternion.LookRotation(movement);
         
-        targetRotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 360 * rotationSpeed * Time.fixedDeltaTime);
+        //targetRotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 360 * rotationSpeed * Time.fixedDeltaTime);
 
         m_Rb.MovePosition(m_Rb.position + movement * moveSpeed * Time.fixedDeltaTime);
-        m_Rb.MoveRotation(targetRotation);
+        //m_Rb.MoveRotation(targetRotation);
     }
     
     void Saltar()
