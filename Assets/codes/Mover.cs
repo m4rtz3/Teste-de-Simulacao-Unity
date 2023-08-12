@@ -12,11 +12,16 @@ public class Mover : MonoBehaviour
     public Rotation rotationScript;
 
     [SerializeField] private float moveSpeed = 10f;
-    [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private float rotationSpeed = 25f;
+
+    private Quaternion currentOrientation = Quaternion.identity;
 
     private float xReset = 0f;
     private float yReset = -0.4565005f;
     private float zReset = -61.9f;
+
+    public float sensivityMouseY = .5f;
+    public float sensivityMouseX = .5f;
 
     private int reset = 0;
 
@@ -28,11 +33,16 @@ public class Mover : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+        Cursor.lockState = CursorLockMode.Locked;
+
         // "spawn"
         transform.position = new Vector3(xReset,yReset,zReset);
 
         //declarando o corpo rigido do character e o utilizando
         m_Rb = GetComponent<Rigidbody>();
+
+        currentOrientation = transform.rotation;
     }
 
     void Awake()
@@ -64,25 +74,29 @@ public class Mover : MonoBehaviour
 
     //metodo movimento
     void Movimento() {
-        //temos aqui que a posicao x altera de acordo com o input horizontal do unity, assim como a posicao z
-        float xValue = Input.GetAxis("Horizontal") * moveSpeed * moveSpeed * moveSpeed * moveSpeed * moveSpeed * moveSpeed * moveSpeed * moveSpeed * Time.deltaTime;
-        float zValue = Input.GetAxis("Vertical") * moveSpeed * moveSpeed * moveSpeed * moveSpeed * moveSpeed * moveSpeed * moveSpeed * moveSpeed * Time.deltaTime;
+        float xArrowInput = Input.GetAxis("Horizontal");
+        float zArrowInput = Input.GetAxis("Vertical");
 
-        // assim por frame, a posição se altera assim
-        Vector3 movement = new Vector3(xValue, 0, zValue).normalized;
+        float xMouseInput = Input.GetAxis("Mouse X") * sensivityMouseX;
+        //float yMouseInput = Input.GetAxis("Mouse Y") * sensivityMouseY;
 
-        if (movement == Vector3.zero)
-        {
-            return;
-        }
+        float xValue = xArrowInput * moveSpeed * Time.deltaTime;
+        float zValue = zArrowInput * moveSpeed * Time.deltaTime;
 
-        // isso tudo para que o personagem rotacione quando é clicado as setas lá
-        //Quaternion targetRotation = Quaternion.LookRotation(movement);
+        Vector3 arrowMovement = currentOrientation * new Vector3(xValue, 0, zValue).normalized;
+
+            m_Rb.MovePosition(m_Rb.position + arrowMovement * moveSpeed * Time.fixedDeltaTime);
         
-        //targetRotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 360 * rotationSpeed * Time.fixedDeltaTime);
+            // Calculate the rotation based on mouse input
+            float rotationAmountY = xMouseInput * rotationSpeed * rotationSpeed * Time.deltaTime * 5f; // Increase rotation speed
+            //float rotationAmountX = -yMouseInput * rotationSpeed * Time.deltaTime * 5f; // Increase rotation speed
 
-        m_Rb.MovePosition(m_Rb.position + movement * moveSpeed * Time.fixedDeltaTime);
-        //m_Rb.MoveRotation(targetRotation);
+            Vector3 rotationVector = new Vector3(0, rotationAmountY, 0);
+            Quaternion rotationDelta = Quaternion.Euler(rotationVector);
+            m_Rb.MoveRotation(m_Rb.rotation * rotationDelta);
+
+            currentOrientation = m_Rb.rotation;
+        
     }
     
     void Saltar()

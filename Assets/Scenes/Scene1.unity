@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.020278865, g: 0.020278865, b: 0.020278865, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -238,7 +238,7 @@ MonoBehaviour:
   scoreCartasScripts: {fileID: 2480590430659615648}
   textoScript: {fileID: 848481291}
   audioControlScript: {fileID: 1733864721}
-  rotationScript: {fileID: 1189259765}
+  rotationScript: {fileID: 0}
   moveSpeed: 1
   rotationSpeed: 5
   forcaDeSalto: 5
@@ -267,7 +267,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!65 &43385699
 BoxCollider:
@@ -1493,11 +1493,6 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!1 &986627512 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8002473187125997063, guid: eb012a172dcf567439e6e104239154b5, type: 3}
-  m_PrefabInstance: {fileID: 3606217577484757028}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1028797687
 GameObject:
   m_ObjectHideFlags: 0
@@ -1609,24 +1604,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4837288891968098159, guid: eb012a172dcf567439e6e104239154b5, type: 3}
   m_PrefabInstance: {fileID: 3606217577484757028}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1189259765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 986627512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ee63b0091443c84a941e7bdf466da55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turn: {x: 0, y: 0}
-  sensivityMouseY: 0.5
-  sensivityMouseX: 1.5
-  deltaMove: {x: 0, y: 0, z: 0}
-  speed: 1
-  mover: {fileID: 986627512}
 --- !u!1 &1210792700
 GameObject:
   m_ObjectHideFlags: 0
@@ -3157,9 +3134,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5654699125721743700, guid: eb012a172dcf567439e6e104239154b5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 43385705}
-    - targetCorrespondingSourceObject: {fileID: 8002473187125997063, guid: eb012a172dcf567439e6e104239154b5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1189259765}
     - targetCorrespondingSourceObject: {fileID: 6374361668572995318, guid: eb012a172dcf567439e6e104239154b5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 599683726}

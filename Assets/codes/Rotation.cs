@@ -6,8 +6,8 @@ public class Rotation : MonoBehaviour
 {
 
     public Vector2 turn;
-    public float sensivityMouseY = 4.5f;
-    public float sensivityMouseX = 0f;
+    public float sensivityMouseY = .5f;
+    public float sensivityMouseX = .5f;
     public Vector3 deltaMove;
     public float speed = 1;
     public GameObject mover;
@@ -26,13 +26,20 @@ public class Rotation : MonoBehaviour
 
     public void Rotacao()
     {
-        turn.x += Input.GetAxis("Mouse X") * sensivityMouseX;
-        turn.y += Input.GetAxis("Mouse Y") * sensivityMouseY;
+        turn.y += Input.GetAxis("Mouse Y") * sensivityMouseY; //vertical
 
-        mover.transform.localRotation = Quaternion.Euler(0, turn.x, 0);
         transform.localRotation = Quaternion.Euler(-turn.y, 0, 0);
 
-        deltaMove = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")) * speed * Time.deltaTime;
-        mover.transform.Translate(deltaMove);
-    }
+        //mover.transform.localRotation = Quaternion.Euler(0, turn.x, 0);
+        //transform.localRotation = Quaternion.Euler(-turn.y, 0, 0);
+
+        //deltaMove = new Vector3(Input.GetAxisRaw//("Horizontal"), 0, Input.GetAxisRaw//("Vertical")) * speed * Time.deltaTime;
+        //mover.transform.Translate(deltaMove);
+//
+        //Quaternion targetRotation = Quaternion.//LookRotation(movement);
+        //
+        //targetRotation = Quaternion.RotateTowards//(transform.localRotation, targetRotation, //360 * speed * Time.fixedDeltaTime);
+//
+        //m_Rb.MoveRotation(targetRotation);
+    }//
 }
