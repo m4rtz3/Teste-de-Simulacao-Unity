@@ -11,8 +11,6 @@ public class AudioController : MonoBehaviour
     public TextMeshProUGUI textoDaSimulacao;
     private float tempoInicial;
 
-    private bool isOn = false;
-
     void Start()
     {
         audioFitaUm = GetComponent<AudioSource>();

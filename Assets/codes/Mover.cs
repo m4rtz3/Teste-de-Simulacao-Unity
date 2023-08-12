@@ -11,7 +11,7 @@ public class Mover : MonoBehaviour
     public AudioController audioControlScript;
     public Rotation rotationScript;
 
-    [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotationSpeed = 25f;
 
     private Quaternion currentOrientation = Quaternion.identity;
@@ -22,8 +22,6 @@ public class Mover : MonoBehaviour
 
     public float sensivityMouseY = .5f;
     public float sensivityMouseX = .5f;
-
-    private int reset = 0;
 
     public float forcaDeSalto = 5f;
     private Rigidbody m_Rb;
@@ -85,17 +83,17 @@ public class Mover : MonoBehaviour
 
         Vector3 arrowMovement = currentOrientation * new Vector3(xValue, 0, zValue).normalized;
 
-            m_Rb.MovePosition(m_Rb.position + arrowMovement * moveSpeed * Time.fixedDeltaTime);
+        m_Rb.MovePosition(m_Rb.position + arrowMovement * moveSpeed * Time.fixedDeltaTime);
         
-            // Calculate the rotation based on mouse input
-            float rotationAmountY = xMouseInput * rotationSpeed * rotationSpeed * Time.deltaTime * 5f; // Increase rotation speed
-            //float rotationAmountX = -yMouseInput * rotationSpeed * Time.deltaTime * 5f; // Increase rotation speed
+        // Calculate the rotation based on mouse input
+        float rotationAmountY = xMouseInput * rotationSpeed * rotationSpeed * Time.deltaTime * 5f; // Increase rotation speed
+        //float rotationAmountX = -yMouseInput * rotationSpeed * Time.deltaTime * 5f; // Increase rotation speed
 
-            Vector3 rotationVector = new Vector3(0, rotationAmountY, 0);
-            Quaternion rotationDelta = Quaternion.Euler(rotationVector);
-            m_Rb.MoveRotation(m_Rb.rotation * rotationDelta);
+        Vector3 rotationVector = new Vector3(0, rotationAmountY, 0);
+        Quaternion rotationDelta = Quaternion.Euler(rotationVector);
+        m_Rb.MoveRotation(m_Rb.rotation * rotationDelta);
 
-            currentOrientation = m_Rb.rotation;
+        currentOrientation = m_Rb.rotation;
         
     }
     
@@ -117,7 +115,30 @@ public class Mover : MonoBehaviour
             //if (collision.gameObject.CompareTag("Carta"))
             if (parentName == "Carta")
             {
-                Destroy(collision.gameObject, 0.1f);
+                GameObject fitaColidida = collision.gameObject;
+
+                Vector3 novaPosicao = new Vector3(0f, 1000f, 0f);
+
+                fitaColidida.transform.position = novaPosicao;
+
+                // Desativar renderizadores
+                Renderer[] renderers = fitaColidida.GetComponentsInChildren<Renderer>();
+                foreach (Renderer renderer in renderers)
+                {
+                    renderer.enabled = false;
+                }
+
+                // Desativar colisores
+                Collider[] colliders = fitaColidida.GetComponentsInChildren<Collider>();
+                foreach (Collider collider in colliders)
+                {
+                    collider.enabled = false;
+                }
+
+                // Executar ações relacionadas à carta (se necessário)
+
+                // Desativar o objeto (opcional)
+                fitaColidida.SetActive(false);
 
                 if (cartasScript != null)
                 {
@@ -133,6 +154,10 @@ public class Mover : MonoBehaviour
                 {
                     scoreCartasScripts.scoreCartasEncontradas();
                 }
+
+                // Destruir o objeto após um curto intervalo de tempo
+                Destroy(fitaColidida, 0.1f);
+
             }
             else if (parentName == "Calcada")
             {

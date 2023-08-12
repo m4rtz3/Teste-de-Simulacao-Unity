@@ -15,7 +15,6 @@ public class Rotation : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
