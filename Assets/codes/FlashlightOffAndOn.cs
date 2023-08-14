@@ -33,4 +33,14 @@ public class FlashlightOffAndOn : MonoBehaviour
             }
         }
     }
+
+    public void modoInvestigacaoLanterna()
+    {
+        flashlight.intensity = offIntensity;
+    }
+
+    public void sairModoInvestigacaoLanterna()
+    {
+        flashlight.intensity = onIntensity;
+    }
 }

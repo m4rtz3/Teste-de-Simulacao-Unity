@@ -12,6 +12,8 @@ public class Rotation : MonoBehaviour
     public float speed = 1;
     public GameObject mover;
 
+    private bool podeMover = true;
+
     // Start is called before the first frame update
     public void Start()
     {
@@ -20,25 +22,26 @@ public class Rotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!podeMover) return;
         Rotacao();
     }
 
     public void Rotacao()
     {
+        if (!podeMover) return;
+
         turn.y += Input.GetAxis("Mouse Y") * sensivityMouseY; //vertical
 
-        transform.localRotation = Quaternion.Euler(-turn.y, 0, 0);
+        transform.localRotation = Quaternion.Euler(-turn.y, turn.x, 0);
+    }
 
-        //mover.transform.localRotation = Quaternion.Euler(0, turn.x, 0);
-        //transform.localRotation = Quaternion.Euler(-turn.y, 0, 0);
+    public void Paralisar() {
+        podeMover = false;
+        Rotacao();
+    }
 
-        //deltaMove = new Vector3(Input.GetAxisRaw//("Horizontal"), 0, Input.GetAxisRaw//("Vertical")) * speed * Time.deltaTime;
-        //mover.transform.Translate(deltaMove);
-//
-        //Quaternion targetRotation = Quaternion.//LookRotation(movement);
-        //
-        //targetRotation = Quaternion.RotateTowards//(transform.localRotation, targetRotation, //360 * speed * Time.fixedDeltaTime);
-//
-        //m_Rb.MoveRotation(targetRotation);
-    }//
+    public void sairParalisar() {
+        podeMover = true;
+        Rotacao();
+    }
 }

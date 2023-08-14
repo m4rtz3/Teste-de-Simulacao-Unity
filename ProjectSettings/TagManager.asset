@@ -11,6 +11,8 @@ TagManager:
   - Lamp
   - Lente
   - Passagem1
+  - Ignite
+  - "Cart\xE3o"
   layers:
   - Default
   - TransparentFX

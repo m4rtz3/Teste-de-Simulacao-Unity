@@ -10,6 +10,7 @@ public class Mover : MonoBehaviour
     public Texto textoScript;
     public AudioController audioControlScript;
     public Rotation rotationScript;
+    public cartaoHotel cartaoHScript;
 
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotationSpeed = 25f;
@@ -20,13 +21,14 @@ public class Mover : MonoBehaviour
     private float yReset = -0.4565005f;
     private float zReset = -61.9f;
 
-    public float sensivityMouseY = .5f;
     public float sensivityMouseX = .5f;
 
     public float forcaDeSalto = 5f;
     private Rigidbody m_Rb;
 
     private Vector3 playerVelocity;
+
+    private bool podeMover = true;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +41,8 @@ public class Mover : MonoBehaviour
 
         //declarando o corpo rigido do character e o utilizando
         m_Rb = GetComponent<Rigidbody>();
+
+        m_Rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         currentOrientation = transform.rotation;
     }
@@ -71,12 +75,13 @@ public class Mover : MonoBehaviour
     }
 
     //metodo movimento
-    void Movimento() {
+    public void Movimento() {
+        if (!podeMover) return;
+
         float xArrowInput = Input.GetAxis("Horizontal");
         float zArrowInput = Input.GetAxis("Vertical");
 
         float xMouseInput = Input.GetAxis("Mouse X") * sensivityMouseX;
-        //float yMouseInput = Input.GetAxis("Mouse Y") * sensivityMouseY;
 
         float xValue = xArrowInput * moveSpeed * Time.deltaTime;
         float zValue = zArrowInput * moveSpeed * Time.deltaTime;
@@ -86,10 +91,9 @@ public class Mover : MonoBehaviour
         m_Rb.MovePosition(m_Rb.position + arrowMovement * moveSpeed * Time.fixedDeltaTime);
         
         // Calculate the rotation based on mouse input
-        float rotationAmountY = xMouseInput * rotationSpeed * rotationSpeed * Time.deltaTime * 5f; // Increase rotation speed
-        //float rotationAmountX = -yMouseInput * rotationSpeed * Time.deltaTime * 5f; // Increase rotation speed
+        float rotationAmountX = xMouseInput * rotationSpeed * rotationSpeed * Time.deltaTime * 5f;
 
-        Vector3 rotationVector = new Vector3(0, rotationAmountY, 0);
+        Vector3 rotationVector = new Vector3(0, rotationAmountX, 0);
         Quaternion rotationDelta = Quaternion.Euler(rotationVector);
         m_Rb.MoveRotation(m_Rb.rotation * rotationDelta);
 
@@ -176,5 +180,28 @@ public class Mover : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void Redirecionar()
+    {
+        Vector3 redirecionamento = new Vector3(0, 0, 0);
+        Quaternion rotationDelta = Quaternion.Euler(redirecionamento);
+        
+        m_Rb.constraints = RigidbodyConstraints.FreezeAll;
+
+        podeMover = false;
+
+        if (cartaoHScript != null)
+        {
+            cartaoHScript.cartaoDoHotel();
+        }
+    }
+
+    public void sairInvestigas()
+    {
+        m_Rb.constraints = RigidbodyConstraints.None;
+        m_Rb.constraints = RigidbodyConstraints.FreezeRotation;
+
+        podeMover = true;
     }
 }
